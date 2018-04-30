@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash.omitby');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _static = require('inline-style-prefixer/static');
 
 var _static2 = _interopRequireDefault(_static);
@@ -37,14 +33,19 @@ exports.default = function (_ref) {
     /* eslint-enable no-param-reassign */
   }
 
-  return (0, _static2.default)((0, _lodash2.default)({
+  var base = {
     animationDelay: delay,
     animationDuration: duration,
     animationFillMode: fillMode,
     animationIterationCount: iterationCount,
     animationTimingFunction: timingFunction,
     animationName: name
-  }, function (val) {
-    return !val;
-  }));
+  };
+
+  return Object.keys(base).reduce(function (accumulator, key) {
+    if (base[key]) {
+      accumulator[key] = base[key];
+    }
+    return accumulator;
+  }, {});
 };

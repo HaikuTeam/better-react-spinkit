@@ -1,5 +1,4 @@
 
-import omitBy from 'lodash.omitby'
 import prefix from 'inline-style-prefixer/static'
 
 export default ({ delay, duration, fillMode, iterationCount, name, timingFunction }) => {
@@ -18,12 +17,19 @@ export default ({ delay, duration, fillMode, iterationCount, name, timingFunctio
     /* eslint-enable no-param-reassign */
   }
 
-  return prefix(omitBy({
+  const base = {
     animationDelay: delay,
     animationDuration: duration,
     animationFillMode: fillMode,
     animationIterationCount: iterationCount,
     animationTimingFunction: timingFunction,
     animationName: name
-  }, (val) => !val))
+  }
+
+  return Object.keys(base).reduce((accumulator, key) => {
+    if (base[key]) {
+      accumulator[key] = base[key]
+    }
+    return accumulator
+  }, {})
 }
